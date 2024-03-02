@@ -1,0 +1,160 @@
+<div class="container">
+  <div id="wonderPhotosCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <% if @wonder.photos.attached? %>
+        <% @wonder.photos.each_with_index do |photo, index| %>
+          <div class="carousel-item <%= 'active' if index.zero? %>">
+            <%= cl_image_tag(photo.key, class: "d-block w-100", alt: "Wonder photo #{index}") %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="carousel-item active">
+          <%= image_tag('thumbnail.jpeg', class: "d-block w-100", alt: "Default thumbnail") %>
+        </div>
+      <% end %>
+    </div>
+    <% if @wonder.photos.count > 1 %>
+      <a class="carousel-control-prev" href="#wonderPhotosCarousel" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#wonderPhotosCarousel" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    <% end %>
+  </div>
+
+  <div class="principal-infos d-flex align-items-center justify-content-between pt-2">
+    <h1><%= @wonder.title %></h1>
+    <div class="buttons-container d-flex justify-content-end">
+      <p type="button" class="btn m-1" data-bs-toggle="modal" data-bs-target="#shareModal">Share</p>
+      <% if current_user %>
+      <p type="button" class="button" data-controller="save-wonder">
+        <%= link_to wonder_favorites_path(@wonder),
+                    class: current_user.has_favorite?(@wonder) ? "d-none btn" : "btn",
+                    data: {
+                      save_wonder_target: "createBtn",
+                      turbo_method: "post",
+                      action: "click->save-wonder#create"
+                    } do %>
+          <i class="fa-regular fa-bookmark"></i> Save
+        <% end %>
+        <%= link_to wonder_favorites_path(@wonder),
+                    class: current_user.has_favorite?(@wonder) ? "btn" : "d-none btn",
+                    data: {
+                      save_wonder_target: "destroyBtn",
+                      turbo_method: "delete",
+                      action: "click->save-wonder#destroy"
+                    } do %>
+          <i class="fa-solid fa-bookmark"></i> Saved
+        <% end %>
+      </p>
+      <% end %>
+    </div>
+    <%=  %>
+  </div>
+  <%= render "shared/share" %>
+
+  <div class="row">
+    <div class="col-md-8 col-sm-12">
+      <div class="infos-container ml-8">
+        <div class="user d-flex align-items-center justify-content-between py-3">
+        <div class="d-flex">
+          <div class="avatar-pic">
+              <%= cl_image_tag @wonder.user.avatar.key, crop: :fill, class: "avatar-show", alt: "dropdown menu" %>
+         </div>
+          <div class="user-details">
+            <p class="user-name mb-1 pl-1">Proposed by: <strong><%= @wonder.user.username %></strong></p>
+            <p class="button text-secondary mb-1">Send a message</p>
+        </div>
+        </div>
+        <div class="d-block">
+            <div class="description d-flex align-items-center">
+              <i class="fa-solid fa-location-dot fa-xl"></i>
+              <div class="flex-grow-1">
+                <h4 class="ms-2 mb-0"><%= @wonder.location %></h4>
+              </div>
+            </div>
+            <div class="description d-flex align-items-center">
+              <i class="fa-solid fa-tag fa-xl"></i>
+              <div class="flex-grow-1">
+                <h4 class="ms-2 mb-0"><%= @wonder.category %></h4>
+              </div>
+            </div>
+        </div>
+        </div>
+
+        <hr>
+
+        <div class="description py-4 align-items-center">
+          <h3 class="mb-2"><%= @wonder.content %></h3>
+          <div style="width: 100%; height: 300px;"
+            data-controller="map"
+            data-map-marker-value="<%= @marker.to_json %>"
+            data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"
+            class="my-3">
+          </div>
+          <div class="flex-grow-1">
+            <%= @wonder.long_description %>
+          </div>
+        </div>
+        <hr>
+
+        <div class="d-grid">
+          <p class="button mt-3 col-3"><i class="fa-solid fa-rotate-left"></i> <%= link_to "Back to all wonders", wonders_path %></p>
+        </div>
+      </div>
+    </div>
+
+    <% if @wonder.user != current_user %>
+      <div class="col-md-4 col-sm-12">
+        <div class="booking-container p-4">
+          <div class="card p-3 shadow p-3 mb-5 bg-body-tertiary rounded">
+            <div data-controller="range" class="card-body">
+              <div class="price d-flex align-items-center pb-3">
+                <i class="fa-solid fa-tag details-icon"></i>
+                <h5 class="mb-0"><strong><%= @wonder.price_per_participant.to_i %> €</strong> per participant</h5>
+                </div>
+
+              <%= simple_form_for [@wonder, @reservation], data: {controller: "datepicker"} do |f| %>
+                <%= f.input :book_date, as: :string, input_html: { data: { datepicker_target: "book_date" }, class: "d-none" }, label: false, placeholder: 'For when?' %>
+
+
+                <%=  f.input :nb_participants, as: :range, label: 'And for how many?', input_html: { id: 'nb_participants', min: 1, max: 10, value: 1, data: { action: "input->range#performValueFromShow"} } %>
+                <span data-range-target="valueDisplayFromShow"> 1 people </span>
+                <div class="d-grid">
+                  <%= f.button :submit, '✨ Book this wonder ✨', class: "btn btn-primary primary-gradient col-12 mt-3" %>
+                </div>
+              <% end %>
+              <hr>
+
+              <div class="summary">
+                <div class="d-flex justify-content-between">
+                  <div class="w-100 fw-medium"><p>Total</p></div>
+                  <div class="flex-shrink-1 fw-medium"><p id="totalPrice" data-range-target="priceDisplayFromShow" data-price=<%=@wonder.price_per_participant.to_int %>><%= @wonder.price_per_participant.to_int %>€</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% elsif @reservations.count > 0 %>
+      <div class="col-md-4 col-sm-12">
+        <div class="booking-container p-4">
+          <div class="card p-3 shadow p-3 mb-5 bg-body-tertiary rounded">
+            <%= render "reservations", reservations: @reservations %>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div class="col-md-4 col-sm-12">
+        <div class="booking-container p-4">
+          <div class="card p-3 shadow p-3 mb-5 bg-body-tertiary rounded">
+            <h5>You have no reservation yet!</h5>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

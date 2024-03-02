@@ -1,0 +1,32 @@
+.navbar-lewagon {
+  justify-content: space-between;
+  background: white;
+}
+
+.navbar-lewagon .navbar-collapse {
+  flex-grow: 0;
+}
+
+.navbar-lewagon .navbar-brand img {
+  width: 40px;
+  border-radius: 10px;
+  transform: scale(1.1);
+}
+
+.text-primary {
+  color: #8b58bf!important;
+}
+.navbar-brand h2 {
+  color: #8b58bf!important;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+.navbar-nav .btn {
+  color: white !important;
+}
+
+.navbar-nav .btn.btn-light {
+  border-color: #8b58bf !important;
+  color: #8b58bf !important;
+}

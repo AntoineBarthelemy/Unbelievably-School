@@ -1,0 +1,34 @@
+<%= render "shared/banner" %>
+<div class="container">
+  <div class="cards mt-4">
+    <% @wonders.each do |wonder| %>
+      <%= link_to wonder_path(wonder), class: "text-decoration-none" do %>
+        <div class="card-wonder">
+          <% if wonder.photos.attached? %>
+            <%= cl_image_tag wonder.photos.first.key, height: 300, width: 400, crop: :fill, class: "card-wonder-img" %>
+          <% else %>
+            <%= image_tag("thumbnail.jpeg") %>
+          <% end %>
+          <div class="card-wonder-infos">
+            <div>
+              <div class="class">
+                <h2><%= wonder.title %></h2>
+              </div>
+              <p><%= wonder.content %></p>
+              <div class="d-flex align-items-center">
+                <i class="fa-solid fa-tag fa-xs me-2 text-secondary"></i>
+                <p ><%= wonder.category %></p>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="fa-solid fa-location-dot fa-xs me-2 text-secondary"></i>
+                <p class="fw-bold"><%= wonder.location %></p>
+              </div>
+            </div>
+            <h2 class="card-wonder-pricing"><%= wonder.price_per_participant.to_i  %>€</h2>
+            <%= cl_image_tag wonder.user.avatar.key, crop: :fill, class: "card-wonder-user avatar-bordered" %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

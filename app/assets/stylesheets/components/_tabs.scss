@@ -1,0 +1,45 @@
+.tabs-underlined {
+  display: flex;
+  align-items: center;
+}
+
+.tabs-underlined .tab-underlined {
+  color: black;
+  padding: 8px;
+  margin: 8px;
+  opacity: .4;
+  cursor: pointer;
+  text-decoration: none;
+  border-bottom: 4px solid transparent;
+}
+
+.tabs-underlined .tab-underlined.active {
+  opacity: 1;
+  border-bottom: 3px solid #555555;
+}
+
+.reservations-list {
+  tbody {
+    td {
+      background-color: transparent;
+    }
+  }
+}
+
+.reservation-highlight {
+  animation: highlight 2s ease;
+  animation-fill-mode: forwards;
+  transition: background-color 0.5s;
+}
+
+@keyframes highlight {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: #FFF4DE;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
