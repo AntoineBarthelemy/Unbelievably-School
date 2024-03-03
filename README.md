@@ -8,7 +8,7 @@
 - [Contributors](#contributors)
 
 ## Contributors
-https://github.com/AntoineBarthelemy/
+https://github.com/AntoineBarthelemy
 https://github.com/achillllllllle
 https://github.com/sachagigoi
 https://github.com/constance-lsf
