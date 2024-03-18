@@ -3,7 +3,7 @@
 Unbelievably: An unforgettable booking experience.
 
 ## Introduction
-Soon
+Unbelievably is based on the technical specifications provided by Le wagon. We had to do a copy of Airbnb but instead of renting apartements we rent magical and wonderful experiences. It's completly imaginative  but I'm sure that everyone here would be disappointed at the idea of unrealisatic activities.  
 
 ## Table of Contents
 
