@@ -1,6 +1,6 @@
 ## Project Title
 
-Unbelievably: An unforgettable booking experience !
+Unbelievably: An unforgettable booking experience 
 
 ## Table of Contents
 
