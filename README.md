@@ -22,7 +22,7 @@ To use the Unbelievably web app, follow these steps:
 
 1. Go via your favorite device (responsive design applied).
 2. Log you with your personnal information.
-4. Discorver the app and enjoy your navigation.
+4. Discover the app and enjoy your navigation.
    
 ## Contributors
 https://github.com/AntoineBarthelemy
