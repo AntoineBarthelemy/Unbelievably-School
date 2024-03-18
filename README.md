@@ -1,13 +1,13 @@
 ## Project Title
 
-Unbelievably: An unforgettable booking experience 
+Unbelievably: An unforgettable booking experience.
 
 ## Introduction
 Soon
 
 ## Table of Contents
 
-- [Introduction](#project-overview)
+- [Introduction](#introduction)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
@@ -15,13 +15,13 @@ Soon
 - [Contributors](#contributors)
 
 ## Installation
-Soon
+Neither installation is required, just your device and a connexion. That's it !
 
 ## Usage
 To use the Unbelievably web app, follow these steps:
 
-1. Go via your mobile web browser
-2. Log you with anything or for best result oscar as username and 123456 as password.
+1. Go via your favorite device (responsive design applied).
+2. Log you with your personnal information.
 4. Discorver the app and enjoy your navigation.
    
 ## Contributors
